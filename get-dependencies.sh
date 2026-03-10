@@ -6,21 +6,52 @@ ARCH=$(uname -m)
 
 echo "Installing package dependencies..."
 echo "---------------------------------------------------------------"
-# pacman -Syu --noconfirm PACKAGESHERE
+pacman -Syu --noconfirm \
+	cmake 			    \
+  	glslang 		    \
+  	hicolor-icon-theme  \
+  	libao 				\
+  	libcdio 			\
+  	libjuice 			\
+  	libzip 				\
+  	lua 				\
+ 	miniupnpc 			\
+	sdl2-compat 	    \
+  	vulkan-headers
 
 echo "Installing debloated packages..."
 echo "---------------------------------------------------------------"
-get-debloated-pkgs --add-common --prefer-nano
+get-debloated-pkgs --add-common --prefer-nano libdecor-mini
 
-# Comment this out if you need an AUR package
-#make-aur-package PACKAGENAME
+echo "Building Flycast..."
+echo "---------------------------------------------------------------"
+REPO="https://github.com/flyinghead/flycast"
+if [ "${DEVEL_RELEASE-}" = 1 ]; then
+    echo "Making nightly build of Flycast..."
+    echo "---------------------------------------------------------------"
+    VERSION="$(git ls-remote "$REPO" HEAD | cut -c 1-9 | head -1)"
+    git clone --recursive --depth 1 "$REPO" ./flycast
+else
+	echo "Making stable build of Flycast..."
+	VERSION="$(git ls-remote --tags --sort="v:refname" "$REPO" | tail -n1 | sed 's/.*\///; s/\^{}//; s/^v//')"
+	git clone --branch v"$VERSION" --single-branch --recursive --depth 1 "$REPO" ./flycast
+fi
+echo "$VERSION" > ~/version
 
-# If the application needs to be manually built that has to be done down here
+# use system vulkan-headers
+sed -E -e '/add_subdirectory/s&^.*Vulkan-Headers.*$&find_package(VulkanHeaders)&' -i ./flycast/CMakeLists.txt
+# use system libjuice
+sed -E -e 's&(LibJuice)Static&\1&' \
+    -e '/add_subdirectory/s&^.*libjuice.*$&find_package(LibJuice)&' \
+    -i ./flycast/CMakeLists.txt
 
-# if you also have to make nightly releases check for DEVEL_RELEASE = 1
-#
-# if [ "${DEVEL_RELEASE-}" = 1 ]; then
-# 	nightly build steps
-# else
-# 	regular build steps
-# fi
+cmake -S ./flycast -B build \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DCMAKE_INSTALL_PREFIX=/usr \
+    -DBUILD_TESTING=OFF \
+    -DUSE_BREAKPAD=OFF \
+    -DUSE_HOST_GLSLANG=ON \
+    -DUSE_HOST_SDL=ON \
+    -DUSE_LIBCDIO=ON
+cmake --build build
+cmake --install build
