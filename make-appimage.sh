@@ -7,7 +7,7 @@ export ARCH
 export OUTPATH=./dist
 export ADD_HOOKS="self-updater.bg.hook"
 export UPINFO="gh-releases-zsync|${GITHUB_REPOSITORY%/*}|${GITHUB_REPOSITORY#*/}|latest|*$ARCH.AppImage.zsync"
-export ICON=/usr/share/pixmaps/flycast.png
+export ICON=/usr/share/icons/hicolor/512x512/apps/flycast.png
 export DESKTOP=/usr/share/applications/flycast.desktop
 
 # Deploy dependencies
