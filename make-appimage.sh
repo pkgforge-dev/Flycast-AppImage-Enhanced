@@ -9,6 +9,9 @@ export ADD_HOOKS="self-updater.bg.hook"
 export UPINFO="gh-releases-zsync|${GITHUB_REPOSITORY%/*}|${GITHUB_REPOSITORY#*/}|latest|*$ARCH.AppImage.zsync"
 export ICON=/usr/share/icons/hicolor/512x512/apps/flycast.png
 export DESKTOP=/usr/share/applications/flycast.desktop
+export STARTUPWMCLASS=flycast
+export DEPLOY_OPENGL=1
+export DEPLOY_VULKAN=1
 
 # Deploy dependencies
 quick-sharun /usr/bin/flycast
