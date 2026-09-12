@@ -8,7 +8,7 @@ echo "Installing package dependencies..."
 echo "---------------------------------------------------------------"
 pacman -Syu --noconfirm \
     clang \
-    sdl2
+    sdl2-compat
 
 echo "Installing debloated packages..."
 echo "---------------------------------------------------------------"
