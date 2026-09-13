@@ -7,23 +7,17 @@ ARCH=$(uname -m)
 echo "Installing package dependencies..."
 echo "---------------------------------------------------------------"
 pacman -Syu --noconfirm \
-	cmake \
-    sdl2-compat \
-	alsa-lib \
-  freetype2 \
-  glslang \
-  hicolor-icon-theme \
-  libao \
-  libcdio \
-  libgomp \
-  libjuice \
-  libpulse \
-  libzip \
-  lua \
-  miniupnpc \
-  systemd-libs \
-  vulkan-headers \
-  zlib
+	cmake 			    \
+  	glslang 		    \
+  	hicolor-icon-theme  \
+  	libao 				\
+  	libcdio 			\
+  	libjuice 			\
+  	libzip 				\
+  	lua 				\
+ 	miniupnpc 			\
+	sdl2-compat 	    \
+  	vulkan-headers
 
 echo "Installing debloated packages..."
 echo "---------------------------------------------------------------"
