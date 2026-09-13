@@ -23,14 +23,6 @@ echo "Installing debloated packages..."
 echo "---------------------------------------------------------------"
 get-debloated-pkgs --add-common --prefer-nano libdecor-mini
 
-#if [ "${DEVEL_RELEASE-}" = 1 ]; then
-#	package=flycast-git
-#else
-#	package=flycast
-#fi
-#make-aur-package "$package"
-#pacman -Q "$package" | awk '{print $2; exit}' > ~/version
-
 echo "Building Flycast..."
 echo "---------------------------------------------------------------"
 REPO="https://github.com/flyinghead/flycast"
