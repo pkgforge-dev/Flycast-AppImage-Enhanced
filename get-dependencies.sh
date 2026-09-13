@@ -38,11 +38,11 @@ if [ "${DEVEL_RELEASE-}" = 1 ]; then
     echo "Making nightly build of Flycast..."
     echo "---------------------------------------------------------------"
     VERSION="$(git ls-remote "$REPO" HEAD | cut -c 1-9 | head -1)"
-    git clone --depth 1 "$REPO" ./flycast
+    git clone --recursive --depth 1 "$REPO" ./flycast
 else
 	echo "Making stable build of Flycast..."
 	VERSION="$(git ls-remote --tags --sort="v:refname" "$REPO" | tail -n1 | sed 's/.*\///; s/\^{}//; s/^v//')"
-	git clone --branch v"$VERSION" --single-branch --depth 1 "$REPO" ./flycast
+	git clone --branch v"$VERSION" --single-branch --recursive --depth 1 "$REPO" ./flycast
 fi
 echo "$VERSION" > ~/version
 
