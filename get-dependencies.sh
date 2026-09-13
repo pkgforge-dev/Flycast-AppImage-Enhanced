@@ -52,3 +52,13 @@ else
 fi
 echo "$VERSION" > ~/version
 
+cmake -S ./flycast -B build \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DCMAKE_INSTALL_PREFIX=/usr \
+    -DBUILD_TESTING=OFF \
+    -DUSE_BREAKPAD=OFF \
+    -DUSE_HOST_GLSLANG=ON \
+    -DUSE_HOST_SDL=ON \
+    -DUSE_LIBCDIO=ON
+cmake --build build
+cmake --install build
