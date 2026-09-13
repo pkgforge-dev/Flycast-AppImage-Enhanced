@@ -27,7 +27,7 @@ pacman -Syu --noconfirm \
 
 echo "Installing debloated packages..."
 echo "---------------------------------------------------------------"
-get-debloated-pkgs --add-common --prefer-nano libdecor-mini ! llvm
+get-debloated-pkgs --add-common --prefer-nano libdecor-mini
 
 #if [ "${DEVEL_RELEASE-}" = 1 ]; then
 #	package=flycast-git
