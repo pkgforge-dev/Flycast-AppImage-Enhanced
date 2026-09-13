@@ -46,6 +46,13 @@ else
 fi
 echo "$VERSION" > ~/version
 
+# use system vulkan-headers
+sed -E -e '/add_subdirectory/s&^.*Vulkan-Headers.*$&find_package(VulkanHeaders)&' -i ./flycast/CMakeLists.txt
+# use system libjuice
+sed -E -e 's&(LibJuice)Static&\1&' \
+    -e '/add_subdirectory/s&^.*libjuice.*$&find_package(LibJuice)&' \
+    -i ./flycast/CMakeLists.txt
+
 cmake -S ./flycast -B build \
     -DCMAKE_BUILD_TYPE=Release \
     -DCMAKE_INSTALL_PREFIX=/usr \
